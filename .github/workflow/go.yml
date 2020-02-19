@@ -1,0 +1,17 @@
+name: Go
+on: [push]
+jobs:
+  build:
+    name: Build docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: teserakt-io/gh-actions/docker-build@master
+        with:
+          branch: ${{ github.ref }}
+          image_name: "e4wasm-demo"
+          dockerfile: "./Dockerfile"
+          registry_endpoint: "eu.gcr.io"
+          registry_name: "${{ secrets.GCR_PROJECT }}"
+          registry_username: _json_key
+          registry_password: ${{ secrets.GCR_TOKEN }}

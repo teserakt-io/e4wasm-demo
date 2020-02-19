@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    <title>E4 web demo</title>
+</head>
+
+<body>
+    <div id="loader">Loading...</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <div id="newClientContainer">
+                    <div class="row">
+                        <h1>Create a new client</h1>
+                        <form id="newClient">
+                            <fieldset class="row">
+                                <p class="col-12">
+                                    <label class="col-2" for="name">Name</label>
+                                    <input class="col-8" type="text" id="name" required />
+                                </p>
+                                <p class="col-12">
+                                    <label class="col-2" for="name">Password</label>
+                                    <input class="col-8" type="password" id="password" required />
+                                </p>
+                                <p class="col-12">
+                                    <input type="submit" value="New client" />
+                                </p>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <h1 class="col-12">Load a saved client</h1>
+                        <div id="savedClients" class="col-12"></div>
+                    </div>
+                </div>
+                <div id="messagesContainer">
+                    <div class="row">
+                        <p class="col-6"><b>Current client: </b><span id="currentClient"></span> <a href="#"
+                                id="logout">Logout</a></p>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row" id="leftContainer">
+                                <form id="subscribeTopicForm" class="col-12">
+                                    <h2>Subscribe to topic</h2>
+                                    <fieldset class="row">
+                                        <p class="col-12">
+                                            <input class="col-6" type="text" id="subscribeTopic" required
+                                                placeholder="Topic..." />
+                                            <input type="submit" value="Subscribe" />
+                                        </p>
+                                    </fieldset>
+                                </form>
+
+                                <form id="sendMessageForm" class="col-12">
+                                    <h2>Send a message</h2>
+                                    <fieldset class="row">
+                                        <p class="col-12">
+                                            <input type="text" class="col-6" id="sendMessage" required
+                                                placeholder="Message..." />
+                                        </p>
+                                        <p class="col-12">
+                                            <select class="col-6" id="sendMessageTopic">
+                                                <option selected disabled hidden>Choose a subscribed topic</option>
+                                            </select>
+                                        </p>
+                                        <p class="col-12">
+                                            <label class="col-4" for="sendMessageProtect">Protect with E4:</label>
+                                            <input class="col-3" type="checkbox" checked id="sendMessageProtect" />
+
+                                        </p>
+                                        <p class="col-12">
+                                            <input type="submit" value="Send" />
+                                        </p>
+                                    </fieldset>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="messages" class="col-6">
+                <h2>Logs</h2>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="js/jquery-3.4.1.slim.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/mqtt.min.js"></script>
+    <script src="js/wasm_exec.js"></script>
+    <script>
+        if (!WebAssembly.instantiateStreaming) {
+            WebAssembly.instantiateStreaming = async (resp, importObject) => {
+                const source = await (await resp).arrayBuffer();
+                return await WebAssembly.instantiate(source, importObject);
+            };
+        }
+
+        const go = new Go();
+        let mod, inst;
+
+        $("#loader").show();
+        WebAssembly.instantiateStreaming(fetch("e4.wasm"), go.importObject).then(
+            async result => {
+                mod = result.module;
+                inst = result.instance;
+                $("#loader").hide();
+                await go.run(inst);
+
+            }
+        );
+    </script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
