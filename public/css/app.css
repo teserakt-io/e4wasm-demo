@@ -20,6 +20,20 @@ nav .navbar-brand {
     padding-left: 50px;
 }
 
+a {
+    text-decoration: underline;
+    color: #000;
+}
+
+.wt {
+    color: #FFF;
+}
+
+a:hover, a:focus {
+    outline: none;
+    text-decoration: underline;
+}
+
 .btn {
     background: #db4632;
     color: #FFF;
