@@ -87,7 +87,7 @@ func newClient(this js.Value, args []js.Value) interface{} {
 			}
 
 			fmt.Printf("created client: %s. Key: %x\n", name, key)
-			fmt.Println("Use this key to create a client on https://console.demo.teserakt.io, it won't be printed again.")
+			fmt.Println("use this key to create a client on https://console.demo.teserakt.io, it won't be printed again.")
 			return js.ValueOf(true)
 
 		}
