@@ -12,115 +12,98 @@
 </head>
 
 <body>
-    <div id="loader">Loading...</div>
-    <div class="container">
-        <div class="row">
-            <div class="col-6">
-                <div id="newClientContainer">
-                    <div class="row">
-                        <h1>Create a new client</h1>
-                        <form id="newClient">
-                            <fieldset class="row">
-                                <p class="col-12">
-                                    <label class="col-2" for="name">Name</label>
-                                    <input class="col-8" type="text" id="name" required />
-                                </p>
-                                <p class="col-12">
-                                    <label class="col-2" for="name">Password</label>
-                                    <input class="col-8" type="password" id="password" required />
-                                </p>
-                                <p class="col-12">
-                                    <input type="submit" value="New client" />
-                                </p>
-                            </fieldset>
-                        </form>
-                    </div>
-                    <div class="row">
-                        <h1 class="col-12">Load a saved client</h1>
-                        <div id="savedClients" class="col-12"></div>
-                    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a href="/">
+            <img src="img/logo.png" width="140px" class="d-inline-block align-top" alt="Teserakt">
+        </a>
+        <span class="navbar-brand">E4 Web Demo</span>
+    </nav>
+    <div class=" container">
+        <div id="content" class="row">
+            <div class="row">
+                <div class="section col-8 offset-2">
+                    <h1>Try E4, in the browser</h1>
+                    <p>
+                        The E4 Web Demo application let you try out E4 from your browser, without
+                        downloading or installing anything! E4 have been compiled into WebAssembly from Go bindings,
+                        allowing it to run directly in the browser. In few steps, you can start using E4, by simulating
+                        IoT devices and manually send MQTT messages.
+                    </p>
                 </div>
-                <div id="messagesContainer">
-                    <div class="row">
-                        <p class="col-6"><b>Current client: </b><span id="currentClient"></span> <a href="#"
-                                id="logout">Logout</a></p>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="row" id="leftContainer">
-                                <form id="subscribeTopicForm" class="col-12">
-                                    <h2>Subscribe to topic</h2>
-                                    <fieldset class="row">
-                                        <p class="col-12">
-                                            <input class="col-6" type="text" id="subscribeTopic" required
-                                                placeholder="Topic..." />
-                                            <input type="submit" value="Subscribe" />
-                                        </p>
-                                    </fieldset>
-                                </form>
-
-                                <form id="sendMessageForm" class="col-12">
-                                    <h2>Send a message</h2>
-                                    <fieldset class="row">
-                                        <p class="col-12">
-                                            <input type="text" class="col-6" id="sendMessage" required
-                                                placeholder="Message..." />
-                                        </p>
-                                        <p class="col-12">
-                                            <select class="col-6" id="sendMessageTopic">
-                                                <option selected disabled hidden>Choose a subscribed topic</option>
-                                            </select>
-                                        </p>
-                                        <p class="col-12">
-                                            <label class="col-4" for="sendMessageProtect">Protect with E4:</label>
-                                            <input class="col-3" type="checkbox" checked id="sendMessageProtect" />
-
-                                        </p>
-                                        <p class="col-12">
-                                            <input type="submit" value="Send" />
-                                        </p>
-                                    </fieldset>
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
+                <div class="section col-8 offset-2">
+                    <h2>How to use the demo application</h2>
+                    <p>
+                        Following the simple steps below, you can start sending E4 protected messages over MQTT and
+                        experience the simplicity of E4.
+                    </p>
+                    <ol>
+                        <li>Create one or more simulated IoT devices in the <a href="demo.html">Demo application</a>
+                        </li>
+                        <li>Register them in our public <a href="https://console.demo.teserakt.io/">web
+                                console</a>
+                            and creates the communication topic(s)
+                        </li>
+                        <li>Subscribe your device to the topics, and start sending and receiving protected or clear
+                            messages</li>
+                    </ol>
+                    <p class="text-center">
+                        <a class="btn btn-lg" href="demo.html">Try it now</a>
+                    </p>
                 </div>
-            </div>
-            <div id="messages" class="col-6">
-                <h2>Logs</h2>
+                <div class="section col-8 offset-2">
+                    <h2>What's behind ?</h2>
+                    <p>
+                        This demo application is a simple Javascript / JQuery snippet offering the following features:
+                        <ul>
+                            <li>Create MQTT clients or load them from the browser localStorage</li>
+                            <li>Send clear or E4 protected messages over MQTT</li>
+                            <li>Subscribe to topics, and receive clear or E4 protected messages</li>
+                        </ul>
+                        All of the code behind this demo is open source and available on github (see the links below).
+                        Additionally, we uses our commercial and public console to present its capabilities.
+                    </p>
+                    <p>
+                        Links:
+                        <ul>
+                            <li><a href="https://github.com/teserakt-io/e4wasm-demo/blob/master/public/js/app.js">Javascript
+                                    / JQuery
+                                    demo application</a></li>
+                            <li><a href="https://github.com/teserakt-io/e4wasm-demo/blob/master/bindings/e4wasm.go">Go
+                                    WebAssembly bindings</a></li>
+                            <li><a href="https://github.com/teserakt-io/e4go">E4 Go client library</a></li>
+                        </ul>
+                    </p>
+                    <p>
+                        If you're experiencing any issue with the demo, have questions or want to know more about our
+                        solutions, feel free to <a href="mailto:contact@teserakt.io">contact us</a>.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-    </div>
 
+    <footer id="footer">
+        <div class="container">
+            <div class="row pt-5 justify-content-center">
+                <div class="col-6">
+                    <div class="row justify-content-center">
+                        <div class="footer-logo">
+                            <img src="img/logo_footer.png" alt="logo">
+                        </div>
+                    </div>
+                    <div class="row justify-content-center pt-3 pb-5">
+                        <p>
+                            Teserakt AG —
+                            UID: CHE‑414.027.875 —
+                            <a href="mailto:contact@teserakt.io">contact@teserakt.io</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
     <script src="js/jquery-3.4.1.slim.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/mqtt.min.js"></script>
-    <script src="js/wasm_exec.js"></script>
-    <script>
-        if (!WebAssembly.instantiateStreaming) {
-            WebAssembly.instantiateStreaming = async (resp, importObject) => {
-                const source = await (await resp).arrayBuffer();
-                return await WebAssembly.instantiate(source, importObject);
-            };
-        }
-
-        const go = new Go();
-        let mod, inst;
-
-        $("#loader").show();
-        WebAssembly.instantiateStreaming(fetch("e4.wasm"), go.importObject).then(
-            async result => {
-                mod = result.module;
-                inst = result.instance;
-                $("#loader").hide();
-                await go.run(inst);
-
-            }
-        );
-    </script>
-    <script src="js/app.js"></script>
 </body>
 
 </html>

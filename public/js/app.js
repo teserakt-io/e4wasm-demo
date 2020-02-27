@@ -9,6 +9,8 @@ $(document).ready(() => {
             msgElt = document.createElement("p");
             msgElt.appendChild(document.createTextNode(args[i]));
             $("#messages").append(msgElt);
+            $("#messages").scrollTop($('#messages').prop("scrollHeight"));
+
         }
     };
 
@@ -28,6 +30,42 @@ $(document).ready(() => {
     var currentClientName = $("#currentClient");
 
     var e4ControlTopic = "";
+
+    $("#newClient").submit((e) => {
+        e.preventDefault();
+        var name = $("#name").val();
+        var password = $("#password").val();
+
+        if (e4js_newClient(name, password) === false) {
+            return;
+        }
+        setCurrentClient(name);
+
+        $("#name").val("");
+        $("#password").val("")
+    });
+
+    $("#savedClients").on("click", ".loadClient", (e) => {
+        e.preventDefault();
+        var name = $(e.target).text();
+
+        if (e4js_newClient(name, "") === false) {
+            return;
+        }
+        setCurrentClient(name);
+    });
+
+    // Delete saved client
+    $("#savedClients").on("click", ".deleteClient", (e) => {
+        e.preventDefault();
+        var name = $(e.target).data('client');
+        if (confirm("Delete client " + name + " from storage ?")) {
+            localStorage.removeItem(name);
+            console.log("deleted client " + name);
+            initSavedClientList();
+        }
+    });
+
 
     function setCurrentClient(name) {
         currentClientName.text(name);
@@ -76,59 +114,10 @@ $(document).ready(() => {
         });
     }
 
-    // Display saved clients from local storage
-    function initSavedClientList() {
-        $("#savedClients").html("");
-        if (localStorage.length === 0) {
-            $("#savedClients").append('<a class="col-12">no saved clients yet...</a>');
-        } else {
-            for (var i = 0; i < localStorage.length; i++) {
-                $("#savedClients").append('<a class="col-6 loadClient" href="#">' + localStorage.key(i) + '</a><a href="#" data-client="' + localStorage.key(i) + '" class="col-6 deleteClient" data>X</a>');
-            }
-        }
-    }
-
-    // Delete saved client
-    $("#savedClients").on("click", ".deleteClient", (e) => {
-        e.preventDefault();
-        var name = $(e.target).data('client');
-        if (confirm("Delete client " + name + " from storage ?")) {
-            localStorage.removeItem(name);
-            console.log("deleted client " + name);
-            initSavedClientList();
-        }
-    });
-
-    // Load a saved client
-    $("#savedClients").on("click", ".loadClient", (e) => {
-        e.preventDefault();
-        var name = $(e.target).text();
-
-        if (e4js_newClient(name, "") === false) {
-            return;
-        }
-        setCurrentClient(name);
-    });
-
     $("#logout").click((e) => {
         e.preventDefault();
         setCurrentClient("");
         initSavedClientList();
-    });
-
-
-    $("#newClient").submit((e) => {
-        e.preventDefault();
-        var name = $("#name").val();
-        var password = $("#password").val();
-
-        if (e4js_newClient(name, password) === false) {
-            return;
-        }
-        setCurrentClient(name);
-
-        $("#name").val("");
-        $("#password").val("")
     });
 
     $("#sendMessageForm").submit((e) => {
@@ -172,6 +161,26 @@ $(document).ready(() => {
 
         $("#subscribeTopic").val("");
     });
+
+
+    // Display saved clients from local storage
+    function initSavedClientList() {
+        $("#savedClients").html("");
+        if (localStorage.length === 0) {
+            $("#savedClients").append('<p>no saved clients yet, start by creating one using the above form, and it will be saved automatically!</p>');
+        } else {
+            for (var i = 0; i < localStorage.length; i++) {
+                $("#savedClients").append(
+                    `<div class="savedClient">
+                        <a class="col-10 btn btn-lg loadClient" href="#">${localStorage.key(i)}</a>
+                        <a href="#" data-client="${localStorage.key(i)}" class="btn btn-lg deleteClient">
+                            X
+                        </a>
+                    </div> `
+                );
+            }
+        }
+    }
 
     initSavedClientList();
 });
