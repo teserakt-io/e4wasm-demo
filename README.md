@@ -1,11 +1,13 @@
+![alt text](logo.png)
+
 # E4Wasm demo
 
-This repository is used to build a demonstration application for the [E4 Go client library](https://github.com/teserakt-io/e4go), in WebAssembly, allowing to exposes the E4 endpoints to JavaScript in a web browser.
+This repository is a demonstration application using the [E4 Go client library](https://github.com/teserakt-io/e4go), behind WebAssembly bindings, allowing to exposes E4 to JavaScript in a web browser.
 
 It contains:
 - WebAssembly bindings to the E4 Go client library (under [./bindings/e4wasm.go](./bindings/e4wasm.go))
-- An HTML / CSS / JavaScript application (under [./public/](./public/))
-- A basic web server (in [./server.go](./server.go) )
+- A HTML / CSS / JavaScript application (under [./public/](./public/))
+- A basic web server, to serve files under ./public/ (in [./server.go](./server.go) )
 
 ## WebAssembly bindings
 
@@ -20,13 +22,13 @@ It also embed a custom storage implementation, interfacing directly with the bro
 
 ## Demo application
 
-The demonstration application aims to simulate IoT devices connected over a MQTT broker, giving to the user the opportunity to publish and receive messages, either in clear text or protected with E4. It also provides a platform to further test the E4 commercial features from our [public demo](https://console.demo.teserakt.io), such as key rotation, and so without any installation prerequisite.
+The demonstration application aims to simulate IoT devices connected over a MQTT broker, and gives to the user the opportunity to publish and receive messages, either in clear text or protected with E4. It also provides a platform to further test the E4 commercial features from our [public demo](https://console.demo.teserakt.io), such as device provisioning and key rotation, and so without any installation prerequisite.
 
 ## Usage
 
 A Makefile is provided allowing to `make build` the WASM bindings as well as the demo webserver, and also start a local server for development with `make serve`.
 
-A dockerfile is also available and can be built with
+A docker container is also available and can be built with
 ```
 docker build -t e4wasm:latest .
 docker run --rm -p 8888:8888 e4wasm:latest
